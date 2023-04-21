@@ -13,7 +13,7 @@ function ContactList(props) {
     //useffect hook
     useEffect (()=>{
       retriveContacts()
-    },[])
+    })
   
   //renders contact list 
   const renderContactList =(searchTerm.length < 1 ? contacts : searchResults).map((contact) => 
