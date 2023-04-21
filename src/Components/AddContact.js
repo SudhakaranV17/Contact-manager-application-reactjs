@@ -1,46 +1,40 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, {  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContactCrud } from "../context/ContactCrudContext";
 
 
-class AddContact extends Component {
-  
-  state = {
-    name: "",
-    email: "",
-    
-  };
+const AddContact =()=> {
+  const [name,setName] = useState("");
+  const [email,setEmail] = useState("");
+  const{addContactHandler}=useContactCrud() 
+  const navigate = useNavigate();
   //MAIN function for adding contact
-  add = (e) => {
+    const add = (e) => {
     e.preventDefault();
-    if (this.state.name === "" || this.state.email === "") {
+    if (name === "" || email === "") {
       alert("All fields are mandatory!");
       return;
     }
-    this.props.addContactHandler({
-      id: Math.floor(Math.random()*100),
-      name: this.state.name,
-      email: this.state.email,
-    });
-    this.setState({ name: "", email: "" });
-    // console.log(this.props);
-    // window.confirm("Contact added successfully. Do you want to go to Contact List ?")?<Link to={'/'}></Link>:alert("Thank You.");
-    alert("added")
+    addContactHandler( {name,email} );
+    setName("")
+    setEmail("")
+    window.confirm("Added successfully. Do you want to see Contact list.?") ? navigate("/") : navigate("/add");
     
   };
 
-  render() {
+ 
     return (
       <div className="ui main">
         <h2>Add Contact</h2>
-        <form className="ui form" onSubmit={this.add}>
+        <form className="ui form" onSubmit={add}>
           <div className="field">
             <label>Name</label>
             <input
               type="text"
               name="name"
               placeholder="Name"
-              value={this.state.name}
-              onChange={(e) => this.setState({ name: e.target.value })}
+              value={name}
+              onChange={(e) => setName( e.target.value )}
             />
           </div>
           <div className="field">
@@ -49,8 +43,8 @@ class AddContact extends Component {
               type="email"
               name="email"
               placeholder="Email"
-              value={this.state.email}
-              onChange={(e) => this.setState({ email: e.target.value })}
+              value={email}
+              onChange={(e) =>setEmail( e.target.value )}
             />
           </div>
           <button className="ui button blue">Add</button>
@@ -61,6 +55,6 @@ class AddContact extends Component {
       </div>
     );
   }
-}
+
 
 export default AddContact;
