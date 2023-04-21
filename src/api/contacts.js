@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL:"http://localhost:3006/"
+    baseURL:"https://peaceful-fox-77e939.netlify.app/"
 })
